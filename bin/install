@@ -59,7 +59,7 @@ get_download_file_path() {
   version=$1
   tmp_download_dir=$2
 
-  echo "${tmp_download_dir}/vim-${version}.tar.gz"
+  echo "${tmp_download_dir}/neovim-${version}.tar.gz"
   return
 }
 
