@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-install_vim() {
+install_neovim() {
   local version
   local install_path
   local concurrency
@@ -8,27 +8,11 @@ install_vim() {
   install_path=$2
   concurrency=$(get_valid_concurrency "$3")
 
-  echo "Install Vim version:${version}, path:${install_path}, build concurrency:${concurrency}"
-
-  local default_config="\
---with-tlib=ncurses \
---with-compiledby=asdf \
---enable-multibyte \
---enable-cscope \
---enable-terminal \
---enable-perlinterp \
---enable-rubyinterp \
---enable-python3interp \
---enable-luainterp \
---enable-gui=no \
---without-x"
-
-  local type="${ASDF_VIM_TYPE:-huge}"
-  local config="${ASDF_VIM_CONFIG:-${default_config}}"
+  echo "Install NeoVim version:${version}, path:${install_path}, build concurrency:${concurrency}"
 
   local tmp_download_dir
   if [ "${TMPDIR}" = "" ]; then
-    tmp_download_dir=$(mktemp -d -t asdf_vim_build_XXXXXX)
+    tmp_download_dir=$(mktemp -d -t asdf_neovim_build_XXXXXX)
   else
     tmp_download_dir="${TMPDIR}"
   fi
@@ -48,15 +32,8 @@ install_vim() {
     fi
 
     tar -xvf "${source_path}" -C "${tmp_download_dir}" || exit 1
-    cd "${tmp_download_dir}/vim-${version}"  || exit 1
-
-    local configure_option="--prefix=${install_path} --with-features=${type} ${config}"
-    # shellcheck disable=SC2086
-    echo 'configure option: ' $configure_option || exit 1
-    # shellcheck disable=SC2086
-    ./configure $configure_option || exit 1
-
-    make -j "${concurrency}" || exit 1
+    cd "${tmp_download_dir}/neovim-${version}"  || exit 1
+    CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS=-DCMAKE_INSTALL_PREFIX=${install_path} make -j "${concurrency}"  || exit 1
     make install || exit 1
   )
 
@@ -92,10 +69,10 @@ get_download_url() {
 
   if [[ "${version}" =~ ^[0-9]+\.* ]] ; then
     # if version is a release number, prepend v
-    echo "https://github.com/vim/vim/archive/v${version}.tar.gz"
+    echo "https://github.com/neovim/neovim/archive/v${version}.tar.gz"
   else
     # otherwise it can be a branch name or commit sha
-    echo "https://github.com/vim/vim/archive/${version}.tar.gz"
+    echo "https://github.com/neovim/neovim/archive/${version}.tar.gz"
   fi
   return
 }
@@ -114,4 +91,4 @@ get_valid_concurrency() {
   return
 }
 
-install_vim "${ASDF_INSTALL_VERSION}" "${ASDF_INSTALL_PATH}" "${ASDF_CONCURRENCY:-1}"
+install_neovim "${ASDF_INSTALL_VERSION}" "${ASDF_INSTALL_PATH}" "${ASDF_CONCURRENCY:-1}"
