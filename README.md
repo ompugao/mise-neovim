@@ -1,4 +1,4 @@
-# asdf-neoneovim [![GitHub Actions Status:Commit](https://github.com/ompugao/mise-neovim/workflows/Commit%20workflow/badge.svg)](https://github.com/ompugao/mise-neovim/actions?query=workflow%3A%22Commit+workflow%22) [![GitHub Actions Status:Schedule](https://github.com/ompugao/mise-neovim/workflows/Schedule%20workflow/badge.svg)](https://github.com/ompugao/mise-neovim/actions?query=workflow%3A%22Schedule+workflow%22)
+# asdf-neovim [![GitHub Actions Status:Commit](https://github.com/ompugao/mise-neovim/workflows/Commit%20workflow/badge.svg)](https://github.com/ompugao/mise-neovim/actions?query=workflow%3A%22Commit+workflow%22) [![GitHub Actions Status:Schedule](https://github.com/ompugao/mise-neovim/workflows/Schedule%20workflow/badge.svg)](https://github.com/ompugao/mise-neovim/actions?query=workflow%3A%22Schedule+workflow%22)
 
 neovim plugin for [asdf](https://github.com/asdf-vm/asdf) version manager.
 
